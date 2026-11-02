@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Camada de animações (fase 2)
+   Nada aqui é obrigatório para o site funcionar. Cada bloco "liga" quando o
+   JS correspondente (js/animations.js) adiciona a classe de ativação.
+
+   Âncoras já presentes no HTML (atributo data-anim):
+     cursor · header · hero · hero-title · hero-avatar · scroll-hint · brand-star
+     skills-marquee · section · section-header · profile · profile-photo · tools
+     service-card · carousel-controls · stats · project-card · feedback-card
+     contact · contact-form
+   Elementos interativos que o cursor deve reconhecer: [data-cursor="hover"]
+   ========================================================================== */
+
+:root {
+  --anim-ease: cubic-bezier(.2, .7, .2, 1);
+  --anim-fast: .25s;
+  --anim-base: .6s;
+  --anim-slow: 1.2s;
+}
+
+/* ---------- Cursor personalizado ---------- */
+.cursor {
+  position: fixed; left: 0; top: 0; z-index: 9999;
+  display: none; pointer-events: none;
+  width: 20px; height: 20px; margin: -10px 0 0 -10px;
+  border-radius: 50%; background: var(--black);
+  mix-blend-mode: difference;
+  transform: translate3d(var(--cx, -100px), var(--cy, -100px), 0) scale(var(--cs, 1));
+  transition: transform .15s var(--anim-ease), width .25s var(--anim-ease), height .25s var(--anim-ease);
+  will-change: transform;
+}
+
+/* Só ativa em dispositivos com mouse e quando o JS pedir */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor { cursor: none; }
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [data-cursor] { cursor: none; }
+  body.has-custom-cursor .cursor { display: block; }
+  body.has-custom-cursor .cursor.is-hover { --cs: 2.4; }
+}
+
+/* ---------- Avatar animado ---------- */
+/* Para trocar a imagem por GIF/Lottie/sprite: substituir o conteúdo de
+   [data-anim="hero-avatar"] mantendo o mesmo contêiner (484x489 no desktop). */
+[data-anim="hero-avatar"] { will-change: transform; }
+
+/* ---------- Revelar ao rolar (desligado por padrão) ---------- */
+.anim-ready [data-reveal] {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity var(--anim-base) var(--anim-ease), transform var(--anim-base) var(--anim-ease);
+}
+.anim-ready [data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .cursor { display: none !important; }
+}

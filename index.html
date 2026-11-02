@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melina Cividanis · Product Designer</title>
+  <meta name="description" content="Portfólio de Melina Cividanis, Product Designer. Projetos de UX, UI, Design System e landing pages com foco em resultado para pessoas e negócios.">
+  <meta name="theme-color" content="#f6f0e3">
+  <link rel="icon" type="image/png" href="assets/img/logo-mark.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Camada de animações separada: tudo que for movimento "extra" (cursor, avatar, GIFs) vive aqui. -->
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+  <!-- Reservado para o cursor animado (fase de animações). Oculto por padrão. -->
+  <div class="cursor" id="cursor" data-anim="cursor" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="topo" data-anim="header">
+    <div class="header__brand">
+      <img class="header__logo" src="assets/img/logo-mark.png" alt="Logo de Melina Cividanis" width="40" height="40">
+      <span class="header__name">Melina Cividanis</span>
+      <img class="header__dot" src="assets/icons/ellipse1.svg" alt="" aria-hidden="true" width="4" height="4">
+      <span class="header__role">Product Designer</span>
+    </div>
+
+    <button class="header__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu" data-menu-toggle>
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="header__menu" id="menu" data-menu>
+      <nav class="nav" aria-label="Principal">
+        <a class="nav__link" href="#quem-sou" data-cursor="hover">Quem Sou</a>
+        <a class="nav__link" href="#solucoes" data-cursor="hover">Soluções</a>
+        <a class="nav__link" href="#projetos" data-cursor="hover">Projetos</a>
+        <a class="nav__link" href="#contato" data-cursor="hover">Contato</a>
+      </nav>
+      <!-- TODO: apontar para o PDF do currículo e adicionar o atributo download -->
+      <a class="btn btn--black" href="#" data-placeholder="cv" data-cursor="hover">
+        <span class="btn__label">Download CV</span>
+        <span class="btn__icon"><img src="assets/icons/group5.svg" alt="" width="12" height="12"></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- ============ HERO ============ -->
+    <div class="top">
+      <section class="hero" aria-labelledby="hero-title" data-anim="hero">
+        <img class="hero__bg" src="assets/img/hero-bg.jpg" alt="" aria-hidden="true" fetchpriority="high">
+
+        <div class="hero__content">
+          <div class="hero__copy">
+            <h1 class="hero__title" id="hero-title" data-anim="hero-title">
+              <span class="hero__line">Conectando <span class="grad" style="--from:41.8%">Pessoas</span>,</span>
+              <span class="hero__line hero__line--indent"><span class="grad" style="--from:21.6%">Tecnologia</span> e <span class="grad" style="--from:78.8%">Negócios</span></span>
+              <span class="hero__line">através do <span class="grad" style="--from:29.8%">Design</span>.</span>
+            </h1>
+            <p class="hero__subtitle">Estratégia e empatia trabalhando juntas para criar interfaces que geram impacto real.</p>
+          </div>
+          <div class="hero__actions">
+            <a class="btn btn--black" href="#contato" data-cursor="hover">
+              <span class="btn__label">Vamos Conversar</span>
+              <span class="btn__icon"><img class="icon-arrow" src="assets/icons/frame189.svg" alt="" width="12" height="12"></span>
+            </a>
+            <a class="btn btn--black" href="#projetos" data-cursor="hover">
+              <span class="btn__label">Ver Projetos</span>
+              <span class="btn__icon"><img class="icon-arrow" src="assets/icons/frame189.svg" alt="" width="12" height="12"></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Avatar: ponto de troca para GIF/Lottie/sprite na fase de animações. Mantém o <img> como fallback. -->
+        <div class="hero__avatar" data-anim="hero-avatar">
+          <img class="hero__avatar-img" src="assets/img/frame10.png" alt="Ilustração de Melina acenando" width="1200" height="896">
+        </div>
+
+        <a class="scroll" href="#quem-sou" aria-label="Rolar para baixo" data-anim="scroll-hint" data-cursor="hover">
+          <span class="scroll__label">scroll</span>
+          <span class="star" data-anim="brand-star"><img src="assets/img/brand-star.png" alt="" width="306" height="351"></span>
+        </a>
+      </section>
+
+      <!-- Carrossel de skills (marquee) -->
+      <div class="marquee" data-marquee data-anim="skills-marquee" aria-label="Competências">
+        <ul class="marquee__group" data-marquee-group>
+          <li class="pill pill--soft">UI/UX Design</li>
+          <li class="pill pill--soft">UX Research</li>
+          <li class="pill pill--soft">Design System</li>
+          <li class="pill pill--soft">Web Design</li>
+          <li class="pill pill--soft">Mobile First</li>
+          <li class="pill pill--soft">Arquitetura da Informação</li>
+          <li class="pill pill--soft">WCAG</li>
+          <li class="pill pill--soft">UX Writing</li>
+          <li class="pill pill--soft">Design Tokens</li>
+          <li class="pill pill--blue">Análise Heurística</li>
+          <li class="pill pill--blue">A/B Testing</li>
+          <li class="pill pill--blue">IA Aplicada</li>
+          <li class="pill pill--blue">IA Automação</li>
+          <li class="pill pill--blue">Métricas de Produto</li>
+          <li class="pill pill--blue">Interation Design</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============ 1 · QUEM SOU ============ -->
+    <section class="section" id="quem-sou" aria-labelledby="quem-sou-title" data-anim="section">
+      <div class="section__header" data-anim="section-header">
+        <div class="section__tag"><span class="section__num">1</span><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6"><h2 class="section__name" id="quem-sou-title">Quem Sou</h2></div>
+        <img class="line" src="assets/icons/line2.svg" alt="" aria-hidden="true">
+      </div>
+
+      <div class="about">
+        <div class="about__side">
+          <div class="profile" data-anim="profile">
+            <img class="profile__bg" src="assets/img/profile-bg.jpg" alt="" aria-hidden="true" width="824" height="824">
+            <img class="profile__cutout" src="assets/img/profile-cutout.png" alt="Foto de Melina Cividanis sentada em um banco" width="540" height="843" data-anim="profile-photo">
+            <div class="profile__bar">
+              <!-- TODO: apontar para o PDF do currículo -->
+              <a class="btn btn--glass" href="#" data-placeholder="cv" data-cursor="hover">
+                <span class="btn__label">Download CV</span>
+                <span class="btn__icon"><img class="icon-arrow" src="assets/icons/frame190.svg" alt="" width="12" height="12"></span>
+              </a>
+              <!-- TODO: link do LinkedIn -->
+              <a class="btn btn--glass" href="#" data-placeholder="linkedin" data-cursor="hover">
+                <span class="btn__label">Linkedin</span>
+                <span class="btn__icon"><img class="icon-arrow" src="assets/icons/frame190.svg" alt="" width="12" height="12"></span>
+              </a>
+            </div>
+          </div>
+
+          <ul class="tools" aria-label="Ferramentas que utilizo" data-anim="tools">
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:26px">
+              <img src="assets/icons/group1.svg" alt="" style="left:5.43px;top:1.5px;width:15.831px;height:24.108px">
+              <img src="assets/icons/group2.svg" alt="" style="left:27.35px;top:7.63px;width:34px;height:12.39px">
+            </span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:14px"><img src="assets/icons/claude-ai-logo-logo.svg" alt="" style="inset:0;width:100%;height:100%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:20px"><img src="assets/img/image14.png" alt="" style="height:183.33%;left:-.14%;top:-41.67%;width:100.28%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:68px;height:11.333px"><img src="assets/img/image12.png" alt="" style="height:362.79%;left:-1.67%;top:-131.4%;width:108.33%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:16px"><img src="assets/img/image4.png" alt="" style="height:515.44%;left:-12.81%;top:-208.05%;width:126.11%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:20.885px"><img src="assets/icons/group.svg" alt="" style="inset:0;width:100%;height:100%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:24px">
+              <img src="assets/icons/group3.svg" alt="" style="top:0;bottom:0;left:32.02%;right:0;width:67.98%;height:100%">
+              <img src="assets/icons/group4.svg" alt="" style="top:6.74%;bottom:6.74%;left:0;right:72.28%;width:27.72%;height:86.52%">
+            </span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:14px"><img src="assets/img/image13.png" alt="" style="height:298.21%;left:-8.72%;top:-112.52%;width:120%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:20px"><img src="assets/img/image3.png" alt="" style="height:239.82%;left:-10.87%;top:-66.97%;width:122.28%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art tool__art--row" style="gap:3px">
+              <img src="assets/icons/layer11.svg" alt="" style="width:24.176px;height:18.726px">
+              <img src="assets/icons/layer12.svg" alt="" style="width:38.56px;height:11.088px">
+            </span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:14.253px"><img src="assets/icons/logo1.svg" alt="" style="inset:0;width:100%;height:100%"></span></li>
+            <li class="tool" data-cursor="hover"><span class="tool__art" style="width:65px;height:21px"><img src="assets/icons/image5-vectorized.svg" alt="" style="inset:0;width:100%;height:100%"></span></li>
+          </ul>
+        </div>
+
+        <div class="about__main">
+          <div class="about__text">
+            <h3 class="about__title">Melina Cividanis, muito prazer!</h3>
+            <div class="about__body">
+              <p>Sou Product Designer, com interesse especial pela relação entre comportamento humano, tecnologia e negócios.</p>
+              <p>Acredito em um Design que vai além da estética: que considera as pessoas, entende o contexto e encontra equilíbrio entre experiência, objetivos e viabilidade. Com o foco em gerar resultados reais para o negócio e soluções funcionais e marcantes para as pessoas.</p>
+              <p>Ao longo da minha trajetória, atuei na concepção de produtos ponta a ponta, desde o discovery à validação final de desenvolvimento.</p>
+              <p>Neste portfólio, compartilho projetos que refletem essa visão, os desafios enfrentados e as decisões que moldaram cada solução.</p>
+            </div>
+          </div>
+          <dl class="facts">
+            <div class="facts__row"><dt>Atuação</dt><dd>Product Design &amp; UI/UX Design</dd></div>
+            <div class="facts__row"><dt>Experiência</dt><dd>~5 anos</dd></div>
+            <div class="facts__row"><dt>Formação</dt><dd>Design Digital e UX (DUX)</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · SOLUÇÕES ============ -->
+    <section class="section" id="solucoes" aria-labelledby="solucoes-title" data-anim="section">
+      <div class="section__header" data-anim="section-header">
+        <div class="section__tag"><span class="section__num">2</span><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6"><h2 class="section__name" id="solucoes-title">Soluções</h2></div>
+        <img class="line" src="assets/icons/line3.svg" alt="" aria-hidden="true">
+      </div>
+
+      <div class="section__body">
+        <div class="intro">
+          <h3 class="intro__title">Soluções que Fazem a Diferença</h3>
+          <p class="intro__text">Design é sobre criar conexões, compreender necessidades e transformar ideias em experiências que fazem sentido.</p>
+        </div>
+
+        <div class="carousel" data-carousel="servicos" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Soluções oferecidas">
+          <article class="service" data-anim="service-card">
+            <div class="service__top">
+              <span class="icon-box"><img src="assets/icons/property1-ui-design.svg" alt="" width="26" height="26"></span>
+              <span class="service__num"><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6">01</span>
+            </div>
+            <div class="service__text">
+              <h4 class="service__title">UI Design</h4>
+              <p>Design de interfaces para aplicativos, dashboards, marketplaces e produtos digitais, com foco em clareza, consistência e usabilidade.</p>
+            </div>
+            <ul class="service__tags service__tags--bottom">
+              <li class="pill pill--tag">Design System</li>
+              <li class="pill pill--tag">Wireframe e Prototipagem</li>
+              <li class="pill pill--tag">Tipografia e Composição</li>
+              <li class="pill pill--tag">Componentes</li>
+            </ul>
+          </article>
+
+          <article class="service" data-anim="service-card">
+            <div class="service__top">
+              <span class="icon-box"><img src="assets/icons/icon2.svg" alt="" width="26" height="26"></span>
+              <span class="service__num"><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6">02</span>
+            </div>
+            <div class="service__text">
+              <h4 class="service__title">UX Design</h4>
+              <p>Análise de usabilidade, benchmarking, fluxos de navegação, pesquisas, testes e propostas de melhorias centradas no usuário.</p>
+            </div>
+            <ul class="service__tags">
+              <li class="pill pill--tag">Arquitetura da Informação</li>
+              <li class="pill pill--tag">UX Research</li>
+              <li class="pill pill--tag">Análise Heurística</li>
+              <li class="pill pill--tag">Benchmarking</li>
+              <li class="pill pill--tag">Fluxo e Jornada do Usuário</li>
+            </ul>
+          </article>
+
+          <article class="service" data-anim="service-card">
+            <div class="service__top">
+              <span class="icon-box"><img src="assets/icons/icon3.svg" alt="" width="26" height="26"></span>
+              <span class="service__num"><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6">03</span>
+            </div>
+            <div class="service__text">
+              <h4 class="service__title">Landing Pages</h4>
+              <p>Criação de páginas estratégicas, responsivas e visualmente atrativas, com foco em experiência do usuário e conversão.</p>
+            </div>
+            <ul class="service__tags">
+              <li class="pill pill--tag">Conversão de Dados</li>
+              <li class="pill pill--tag">UX Strategy</li>
+              <li class="pill pill--tag">Design Responsivo e Mobile-first</li>
+              <li class="pill pill--tag">Vibe Coding</li>
+              <li class="pill pill--tag">IA Aplicada</li>
+            </ul>
+          </article>
+
+          <article class="service" data-anim="service-card">
+            <div class="service__top">
+              <span class="icon-box"><img src="assets/icons/icon4.svg" alt="" width="26" height="26"></span>
+              <span class="service__num"><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6">04</span>
+            </div>
+            <div class="service__text">
+              <h4 class="service__title">Identidade Visual</h4>
+              <p>Criação de identidades visuais estratégicas que traduzem a personalidade, os valores e o posicionamento de cada marca.</p>
+            </div>
+            <ul class="service__tags service__tags--bottom">
+              <li class="pill pill--tag">Logotipo</li>
+              <li class="pill pill--tag">Paleta de Cores</li>
+              <li class="pill pill--tag">Tipografia e composição</li>
+              <li class="pill pill--tag">Elementos Visuais</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="carousel-controls" data-anim="carousel-controls">
+          <button class="btn btn--brown" type="button" data-carousel-prev="servicos" data-cursor="hover">
+            <span class="btn__icon"><img src="assets/icons/icon.svg" alt="" width="14" height="14"></span>
+            <span class="btn__label">Anterior</span>
+          </button>
+          <span class="star" data-anim="brand-star"><img src="assets/img/brand-star.png" alt="" width="306" height="351"></span>
+          <button class="btn btn--brown" type="button" data-carousel-next="servicos" data-cursor="hover">
+            <span class="btn__label">Próximo</span>
+            <span class="btn__icon"><img src="assets/icons/icon1.svg" alt="" width="14" height="14"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · PROJETOS & CASES ============ -->
+    <section class="section" id="projetos" aria-labelledby="projetos-title" data-anim="section">
+      <div class="section__header" data-anim="section-header">
+        <div class="section__tag"><span class="section__num">3</span><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6"><h2 class="section__name" id="projetos-title">Projetos &amp; Cases</h2></div>
+        <img class="line" src="assets/icons/line5.svg" alt="" aria-hidden="true">
+      </div>
+
+      <div class="section__body">
+        <dl class="stats" data-anim="stats">
+          <div class="stat"><dt class="stat__label">Anos de<br>Experiência</dt><dd class="stat__value">+5</dd></div>
+          <div class="stat"><dt class="stat__label">Projetos<br>Realizados</dt><dd class="stat__value">+20</dd></div>
+          <div class="stat"><dt class="stat__label">Conversão Positiva<br>de Satisfação</dt><dd class="stat__value">97%</dd></div>
+        </dl>
+
+        <article class="project" data-anim="project-card">
+          <div class="project__media">
+            <img class="project__img" src="assets/img/card.png" alt="" aria-hidden="true">
+            <div class="project__shade"></div>
+            <ul class="project__labels">
+              <li class="pill pill--label-beige">UX Research</li>
+              <li class="pill pill--label-blue">Design System</li>
+            </ul>
+          </div>
+          <div class="project__info">
+            <img class="project__info-bg" src="assets/img/card1.png" alt="" aria-hidden="true">
+            <div class="project__copy">
+              <p class="project__kicker"><img class="line line--short" src="assets/icons/line4.svg" alt="" aria-hidden="true">Projeto 1</p>
+              <h3 class="project__title">Título do Case/Projeto</h3>
+              <p class="project__desc">Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque.</p>
+            </div>
+            <!-- TODO: link para a página do case quando existir -->
+            <a class="btn btn--black project__cta" href="#" data-placeholder="case-1" data-cursor="hover">
+              <span class="btn__label">Ver Projeto</span>
+              <span class="btn__icon"><img class="icon-arrow" src="assets/icons/frame189.svg" alt="" width="12" height="12"></span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 4 · FEEDBACKS ============ -->
+    <section class="section section--wide" id="feedbacks" aria-labelledby="feedbacks-title" data-anim="section">
+      <div class="section__header" data-anim="section-header">
+        <div class="section__tag"><span class="section__num">4</span><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6"><h2 class="section__name" id="feedbacks-title">Feedbacks</h2></div>
+        <img class="line" src="assets/icons/line6.svg" alt="" aria-hidden="true">
+      </div>
+
+      <div class="section__body">
+        <div class="intro">
+          <h3 class="intro__title">Depoimentos e Recomendações</h3>
+          <p class="intro__text">Colaboradores e Clientes que acompanharam meu trabalho de perto.</p>
+        </div>
+
+        <!-- Textos dos depoimentos ainda são placeholder (lorem ipsum) até receber os reais -->
+        <div class="carousel carousel--center" data-carousel="feedbacks" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Depoimentos">
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+            <blockquote class="feedback__text">
+              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
+              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
+            </blockquote>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__name">Giullia</span>
+              <span class="feedback__role">Mentorada UX/UI Designer</span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+            <blockquote class="feedback__text">
+              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
+              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
+            </blockquote>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__name">Giullia</span>
+              <span class="feedback__role">Mentorada UX/UI Designer</span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+            <blockquote class="feedback__text">
+              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
+              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
+            </blockquote>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__name">Daniel</span>
+              <span class="feedback__role">Desenvolvedor Full Stack</span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+            <blockquote class="feedback__text">
+              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
+              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
+            </blockquote>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__name">Letticia</span>
+              <span class="feedback__role">DHO</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="carousel-controls" data-anim="carousel-controls">
+          <button class="btn btn--brown" type="button" data-carousel-prev="feedbacks" data-cursor="hover">
+            <span class="btn__icon"><img src="assets/icons/icon.svg" alt="" width="14" height="14"></span>
+            <span class="btn__label">Anterior</span>
+          </button>
+          <span class="star" data-anim="brand-star"><img src="assets/img/brand-star.png" alt="" width="306" height="351"></span>
+          <button class="btn btn--brown" type="button" data-carousel-next="feedbacks" data-cursor="hover">
+            <span class="btn__label">Próximo</span>
+            <span class="btn__icon"><img src="assets/icons/icon1.svg" alt="" width="14" height="14"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5 · CONTATO ============ -->
+    <section class="contact" id="contato" aria-labelledby="contato-title" data-anim="contact">
+      <img class="contact__bg" src="assets/img/contact-bg.jpg" alt="" aria-hidden="true">
+
+      <div class="contact__grid">
+        <!-- TODO: ligar o envio (Formspree, e-mail serverless ou similar). Por ora não envia nada. -->
+        <form class="form" data-form="contact" novalidate data-anim="contact-form">
+          <div class="form__fields">
+            <div class="field">
+              <label class="field__label" for="f-nome">Nome</label>
+              <input class="field__control" id="f-nome" name="nome" type="text" placeholder="Seu nome / Nome da empresa" autocomplete="name">
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-email">E-mail</label>
+              <input class="field__control" id="f-email" name="email" type="email" placeholder="Melhor e-mail para te retornar" autocomplete="email">
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-solucao">Atuação/Solução</label>
+              <input class="field__control" id="f-solucao" name="solucao" type="text" placeholder="Alguma solução em mente?">
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-mensagem">Mensagem</label>
+              <textarea class="field__control field__control--area" id="f-mensagem" name="mensagem" placeholder="O que está no seu radar?"></textarea>
+            </div>
+          </div>
+          <button class="btn btn--black form__submit" type="submit" data-cursor="hover">
+            <span class="btn__label">Enviar Mensagem</span>
+            <span class="btn__icon"><img src="assets/icons/group6.svg" alt="" width="13" height="13"></span>
+          </button>
+        </form>
+
+        <div class="contact__info">
+          <div class="contact__copy">
+            <h2 class="contact__title" id="contato-title">Vamos construir juntos!</h2>
+            <div class="contact__text">
+              <p>Aberta a novos desafios, propostas de projetos ou para trocar ideias sobre design de produto.</p>
+              <p>Me conte um pouco sobre o que você tem em mente, e te retorno o contato em até 24 horas.</p>
+              <p>Enquanto isso, conecte-se comigo através do LinkedIn!</p>
+            </div>
+          </div>
+          <ul class="contact__links">
+            <li>
+              <!-- TODO: link real do LinkedIn -->
+              <a class="contact__link" href="#" data-placeholder="linkedin" data-cursor="hover">
+                <span class="contact__icon"><img src="assets/icons/linkedin-svgrepo-com3.svg" alt="" width="24" height="24"></span>
+                <span>linkedin.com/in/melina-cividanis</span>
+              </a>
+            </li>
+            <li>
+              <!-- TODO: trocar por mailto: quando o e-mail for confirmado -->
+              <a class="contact__link" href="#" data-placeholder="email" data-cursor="hover">
+                <span class="contact__icon"><img src="assets/icons/email.svg" alt="" width="27" height="23"></span>
+                <span>melinacividaniss@gmail.com</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="footer__brand">
+          <img src="assets/img/logo-mark.png" alt="" aria-hidden="true" width="32" height="32">
+          <small>© <span data-year>2026</span> Melina Cividanis · Todos os direitos reservados</small>
+        </div>
+        <a class="btn btn--black" href="#topo" data-cursor="hover">
+          <span class="btn__label">Voltar ao topo</span>
+          <span class="btn__icon"><img src="assets/icons/property1-go-to-top.svg" alt="" width="14" height="14"></span>
+        </a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/animations.js" defer></script>
+</body>
+</html>
