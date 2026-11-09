@@ -10,7 +10,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
   <!-- Camada de animações separada: tudo que for movimento "extra" (cursor, avatar, GIFs) vive aqui. -->
@@ -63,7 +63,7 @@
               <span class="hero__line hero__line--indent"><span class="grad" style="--from:21.6%">Tecnologia</span> e <span class="grad" style="--from:78.8%">Negócios</span></span>
               <span class="hero__line">através do <span class="grad" style="--from:29.8%">Design</span>.</span>
             </h1>
-            <p class="hero__subtitle">Estratégia e empatia trabalhando juntas para criar interfaces que geram impacto real.</p>
+            <p class="hero__subtitle">Estratégia e empatia trabalhando juntas para criar interfaces que geram<br>impacto real.</p>
           </div>
           <div class="hero__actions">
             <a class="btn btn--black" href="#contato" data-cursor="hover">
@@ -91,21 +91,21 @@
       <!-- Carrossel de skills (marquee) -->
       <div class="marquee" data-marquee data-anim="skills-marquee" aria-label="Competências">
         <ul class="marquee__group" data-marquee-group>
-          <li class="pill pill--soft">UI/UX Design</li>
-          <li class="pill pill--soft">UX Research</li>
-          <li class="pill pill--soft">Design System</li>
-          <li class="pill pill--soft">Web Design</li>
-          <li class="pill pill--soft">Mobile First</li>
-          <li class="pill pill--soft">Arquitetura da Informação</li>
-          <li class="pill pill--soft">WCAG</li>
-          <li class="pill pill--soft">UX Writing</li>
-          <li class="pill pill--soft">Design Tokens</li>
-          <li class="pill pill--blue">Análise Heurística</li>
-          <li class="pill pill--blue">A/B Testing</li>
-          <li class="pill pill--blue">IA Aplicada</li>
-          <li class="pill pill--blue">IA Automação</li>
-          <li class="pill pill--blue">Métricas de Produto</li>
-          <li class="pill pill--blue">Interation Design</li>
+          <li class="pill pill--tag">UI/UX Design</li>
+          <li class="pill pill--tag">UX Research</li>
+          <li class="pill pill--tag">Design System</li>
+          <li class="pill pill--tag">Web Design</li>
+          <li class="pill pill--tag">Mobile First</li>
+          <li class="pill pill--tag">Arquitetura da Informação</li>
+          <li class="pill pill--tag">WCAG</li>
+          <li class="pill pill--tag">UX Writing</li>
+          <li class="pill pill--tag">Design Tokens</li>
+          <li class="pill pill--tag">Análise Heurística</li>
+          <li class="pill pill--tag">A/B Testing</li>
+          <li class="pill pill--tag">IA Aplicada</li>
+          <li class="pill pill--tag">IA Automação</li>
+          <li class="pill pill--tag">Métricas de Produto</li>
+          <li class="pill pill--tag">Interation Design</li>
         </ul>
       </div>
     </div>
@@ -286,13 +286,8 @@
         <img class="line" src="assets/icons/line5.svg" alt="" aria-hidden="true">
       </div>
 
-      <div class="section__body">
-        <dl class="stats" data-anim="stats">
-          <div class="stat"><dt class="stat__label">Anos de<br>Experiência</dt><dd class="stat__value">+5</dd></div>
-          <div class="stat"><dt class="stat__label">Projetos<br>Realizados</dt><dd class="stat__value">+20</dd></div>
-          <div class="stat"><dt class="stat__label">Conversão Positiva<br>de Satisfação</dt><dd class="stat__value">97%</dd></div>
-        </dl>
-
+      <!-- Os números (+5 anos, +20 projetos, 97%) estão ocultos no protótipo do Figma, por isso não aparecem aqui. -->
+      <div class="projects">
         <article class="project" data-anim="project-card">
           <div class="project__media">
             <img class="project__img" src="assets/img/card.png" alt="" aria-hidden="true">
@@ -316,11 +311,36 @@
             </a>
           </div>
         </article>
+
+        <!-- Segundo card sobrepõe o primeiro em 96px, como no protótipo (base para o efeito de empilhar no scroll) -->
+        <article class="project" data-anim="project-card">
+          <div class="project__media">
+            <img class="project__img" src="assets/img/card.png" alt="" aria-hidden="true">
+            <div class="project__shade"></div>
+            <ul class="project__labels">
+              <li class="pill pill--label-beige">UX Research</li>
+              <li class="pill pill--label-blue">Design System</li>
+            </ul>
+          </div>
+          <div class="project__info">
+            <img class="project__info-bg" src="assets/img/card1.png" alt="" aria-hidden="true">
+            <div class="project__copy">
+              <p class="project__kicker"><img class="line line--short" src="assets/icons/line4.svg" alt="" aria-hidden="true">Projeto 2</p>
+              <h3 class="project__title">Título do Case/Projeto</h3>
+              <p class="project__desc">Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque.</p>
+            </div>
+            <!-- TODO: link para a página do case quando existir -->
+            <a class="btn btn--black project__cta" href="#" data-placeholder="case-2" data-cursor="hover">
+              <span class="btn__label">Ver Projeto</span>
+              <span class="btn__icon"><img class="icon-arrow" src="assets/icons/frame189.svg" alt="" width="12" height="12"></span>
+            </a>
+          </div>
+        </article>
       </div>
     </section>
 
     <!-- ============ 4 · FEEDBACKS ============ -->
-    <section class="section section--wide" id="feedbacks" aria-labelledby="feedbacks-title" data-anim="section">
+    <section class="section" id="feedbacks" aria-labelledby="feedbacks-title" data-anim="section">
       <div class="section__header" data-anim="section-header">
         <div class="section__tag"><span class="section__num">4</span><img src="assets/icons/ellipse2.svg" alt="" aria-hidden="true" width="6" height="6"><h2 class="section__name" id="feedbacks-title">Feedbacks</h2></div>
         <img class="line" src="assets/icons/line6.svg" alt="" aria-hidden="true">
@@ -332,61 +352,132 @@
           <p class="intro__text">Colaboradores e Clientes que acompanharam meu trabalho de perto.</p>
         </div>
 
-        <!-- Textos dos depoimentos ainda são placeholder (lorem ipsum) até receber os reais -->
-        <div class="carousel carousel--center" data-carousel="feedbacks" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Depoimentos">
+        <div class="carousel" data-carousel="feedbacks" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Depoimentos">
           <figure class="feedback" data-anim="feedback-card">
             <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
-            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
-            <blockquote class="feedback__text">
-              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
-              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
-            </blockquote>
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>Excelente trabalho! Demonstrou muita capacidade de compreender nossas necessidades e transformar nossos objetivos em uma experiência digital mais clara, intuitiva e funcional.</p>
+                <p>Sua visão analítica e atenção à experiência dos usuários contribuíram muito para o desenvolvimento de soluções alinhadas ao nosso negócio.</p>
+                <p>Ficamos muito satisfeitos com o resultado do nosso site e recomendamos seu trabalho!</p>
+              </blockquote>
+            </div>
             <figcaption class="feedback__author">
               <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
-              <span class="feedback__name">Giullia</span>
-              <span class="feedback__role">Mentorada UX/UI Designer</span>
+              <span class="feedback__who"><span class="feedback__name">RG Corretores</span><span class="feedback__role">Corretora de Imóveis</span></span>
             </figcaption>
           </figure>
 
           <figure class="feedback" data-anim="feedback-card">
             <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
-            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
-            <blockquote class="feedback__text">
-              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
-              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
-            </blockquote>
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>A Melina conseguiu compreender muito bem a proposta da nossa marca e traduzir nossa identidade em soluções visuais que realmente representavam o que buscávamos.</p>
+                <p>Demonstrou muita criatividade, sensibilidade estética e atenção aos detalhes durante todo o trabalho.</p>
+                <p>Ficamos muito satisfeitos com o resultado e com o profissionalismo em todo o processo. Recomendamos seu trabalho!</p>
+              </blockquote>
+            </div>
             <figcaption class="feedback__author">
               <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
-              <span class="feedback__name">Giullia</span>
-              <span class="feedback__role">Mentorada UX/UI Designer</span>
+              <span class="feedback__who"><span class="feedback__name">Underfloor</span><span class="feedback__role">Ateliê de Moda Casual</span></span>
             </figcaption>
           </figure>
 
           <figure class="feedback" data-anim="feedback-card">
             <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
-            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
-            <blockquote class="feedback__text">
-              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
-              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
-            </blockquote>
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>A Melina foi uma pessoa extremamente solícita e importante para o meu desenvolvimento profissional durante o meu treinamento como junior.</p>
+                <p>Esteve sempre disponível para me orientar, esclarecer dúvidas técnicas e compartilhar conhecimentos, contribuindo muito para minha evolução na área.</p>
+                <p>Também foi muito importante o apoio que recebi em relação à minha confiança profissional dentro da equipe.</p>
+              </blockquote>
+            </div>
             <figcaption class="feedback__author">
               <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
-              <span class="feedback__name">Daniel</span>
-              <span class="feedback__role">Desenvolvedor Full Stack</span>
+              <span class="feedback__who"><span class="feedback__name">Giullia</span><span class="feedback__role">Mentorada UX/UI Designer</span></span>
             </figcaption>
           </figure>
 
           <figure class="feedback" data-anim="feedback-card">
             <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
-            <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
-            <blockquote class="feedback__text">
-              <p>Lorem ipsum dolor sit amet consectetur. Aliquam amet turpis tortor convallis. Senectus nulla aliquet enim lacus vitae curabitur lorem euismod ante. Ac amet fermentum egestas a donec pellentesque. Neque aenean arcu eget turpis hendrerit habitasse.</p>
-              <p>Amet pharetra sodales leo nisi. Tristique euismod magna dolor vulputate nibh.</p>
-            </blockquote>
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>Não poderia deixar de registrar aqui toda minha admiração por você. Acompanhar todo seu crescimento é lindo demais!</p>
+                <p>Ver toda sua dedicação, comprometimento e conquistas me faz muito realizada, pois desde nossa primeira conversa sabia que você iria agarrar essa oportunidade!</p>
+                <p>Torço e vibro pelo seu sucesso, conte sempre comigo.</p>
+              </blockquote>
+            </div>
             <figcaption class="feedback__author">
               <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
-              <span class="feedback__name">Letticia</span>
-              <span class="feedback__role">DHO</span>
+              <span class="feedback__who"><span class="feedback__name">Letticia</span><span class="feedback__role">DHO</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>Você tem evoluído muito e está numa constante.</p>
+                <p>Continue assim, estudando, se dedicando, se envolvendo nos projetos e buscando sempre o melhor.</p>
+                <p>É muito bom trabalhar contigo e sinto que tenho suporte e apoio sempre que a coisa aperta.</p>
+              </blockquote>
+            </div>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__who"><span class="feedback__name">Cris</span><span class="feedback__role">Lead UX/UI Designer</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>Foi uma experiência excelente para aproximar as demandas reais dos clientes do processo de produto.</p>
+                <p>Nossa colaboração era muito rica, trocando ideias constantemente sobre melhorias e opiniões dos usuários. Sua escuta ativa, empatia e visão centrada na experiência sempre traziam direcionamentos muito valiosos.</p>
+                <p>Uma profissional proativa, organizada e que sabe transformar feedbacks em soluções claras.</p>
+              </blockquote>
+            </div>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__who"><span class="feedback__name">Victor Hugo</span><span class="feedback__role">Suporte ao Software / Usuário</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>Trabalhar com a Melina torna a rotina de desenvolvimento muito mais fluida. Ela projeta pensando na viabilidade técnica, na consistência dos componentes e na experiência real do usuário.</p>
+                <p>O que mais se destaca é sua abertura ao diálogo com o time de engenharia, sempre buscando o melhor equilíbrio entre usabilidade e implementação.</p>
+                <p>É uma designer muito técnica e proativa.</p>
+              </blockquote>
+            </div>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__who"><span class="feedback__name">Daniel</span><span class="feedback__role">Desenvolvedor Full Stack</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="feedback" data-anim="feedback-card">
+            <img class="feedback__bg" src="assets/img/feedback1.png" alt="" aria-hidden="true">
+            <div class="feedback__main">
+              <span class="feedback__quote"><img src="assets/img/image11.png" alt="" aria-hidden="true"></span>
+              <blockquote class="feedback__text">
+                <p>Parabéns pela forma como você toca as coisas!</p>
+                <p>Eu tenho um apego especial pelo projeto, e como a gente tá ali no dia a dia, na ponta do processo, faz toda a diferença ter alguém do seu nível jogando junto.</p>
+                <p>É muito bom dividir essa responsabilidade com você.</p>
+              </blockquote>
+            </div>
+            <figcaption class="feedback__author">
+              <img class="line" src="assets/icons/line7.svg" alt="" aria-hidden="true">
+              <span class="feedback__who"><span class="feedback__name">João</span><span class="feedback__role">Desenvolvedor Mobile</span></span>
             </figcaption>
           </figure>
         </div>
@@ -423,7 +514,14 @@
             </div>
             <div class="field">
               <label class="field__label" for="f-solucao">Atuação/Solução</label>
-              <input class="field__control" id="f-solucao" name="solucao" type="text" placeholder="Alguma solução em mente?">
+              <select class="field__control field__control--select" id="f-solucao" name="solucao">
+                <option value="" selected>Alguma solução em mente?</option>
+                <option>UI Design</option>
+                <option>UX Design</option>
+                <option>Landing Pages</option>
+                <option>Identidade Visual</option>
+                <option>Outro</option>
+              </select>
             </div>
             <div class="field">
               <label class="field__label" for="f-mensagem">Mensagem</label>
@@ -441,7 +539,7 @@
             <h2 class="contact__title" id="contato-title">Vamos construir juntos!</h2>
             <div class="contact__text">
               <p>Aberta a novos desafios, propostas de projetos ou para trocar ideias sobre design de produto.</p>
-              <p>Me conte um pouco sobre o que você tem em mente, e te retorno o contato em até 24 horas.</p>
+              <p>Me conte um pouco sobre o que você tem em mente,<br>e te retorno o contato em até 24 horas.</p>
               <p>Enquanto isso, conecte-se comigo através do LinkedIn!</p>
             </div>
           </div>
@@ -449,14 +547,14 @@
             <li>
               <!-- TODO: link real do LinkedIn -->
               <a class="contact__link" href="#" data-placeholder="linkedin" data-cursor="hover">
-                <span class="contact__icon"><img src="assets/icons/linkedin-svgrepo-com3.svg" alt="" width="24" height="24"></span>
+                <span class="contact__icon"><img src="assets/icons/linkedin-svgrepo-com3.svg" alt="" width="20" height="20"></span>
                 <span>linkedin.com/in/melina-cividanis</span>
               </a>
             </li>
             <li>
               <!-- TODO: trocar por mailto: quando o e-mail for confirmado -->
               <a class="contact__link" href="#" data-placeholder="email" data-cursor="hover">
-                <span class="contact__icon"><img src="assets/icons/email.svg" alt="" width="27" height="23"></span>
+                <span class="contact__icon"><img src="assets/icons/email.svg" alt="" width="22" height="19"></span>
                 <span>melinacividaniss@gmail.com</span>
               </a>
             </li>
@@ -469,9 +567,9 @@
           <img src="assets/img/logo-mark.png" alt="" aria-hidden="true" width="32" height="32">
           <small>© <span data-year>2026</span> Melina Cividanis · Todos os direitos reservados</small>
         </div>
-        <a class="btn btn--black" href="#topo" data-cursor="hover">
-          <span class="btn__label">Voltar ao topo</span>
-          <span class="btn__icon"><img src="assets/icons/property1-go-to-top.svg" alt="" width="14" height="14"></span>
+        <a class="btn btn--glass" href="#topo" data-cursor="hover">
+          <span class="btn__label">Voltar ao Topo</span>
+          <span class="btn__icon"><img class="icon-arrow" src="assets/icons/footer-arrow.svg" alt="" width="12" height="12"></span>
         </a>
       </footer>
     </section>

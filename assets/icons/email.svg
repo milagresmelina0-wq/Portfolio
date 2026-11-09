@@ -1,6 +1,6 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="29" height="24.95" viewBox="0 0 29 24.95" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="20.7" viewBox="0 0 24 20.7" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="email">
-<path id="vector" d="M21.25 23.95H7.75C3.7 23.95 1 21.925 1 17.2V7.75C1 3.025 3.7 1 7.75 1H21.25C25.3 1 28 3.025 28 7.75V17.2C28 21.925 25.3 23.95 21.25 23.95Z" fill="#202020" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke="#F6F0E3"/>
-<path id="vector_2" d="M23.6392 6.76311L16.1508 12.5496C15.1784 13.3009 13.8214 13.3009 12.849 12.5496L5.36047 6.76311" stroke-width="2" stroke-linecap="round" stroke="#F6F0E3"/>
+<path id="vector" d="M17.5 19.7H6.5C3.2 19.7 1 18.05 1 14.2V6.5C1 2.65 3.2 1 6.5 1H17.5C20.8 1 23 2.65 23 6.5V14.2C23 18.05 20.8 19.7 17.5 19.7Z" fill="#202020" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke="#F6F0E3"/>
+<path id="vector_2" d="M19.4468 5.6962L13.3451 10.4111C12.5528 11.0233 11.447 11.0233 10.6547 10.4111L4.55298 5.6962" stroke-width="2" stroke-linecap="round" stroke="#F6F0E3"/>
 </g>
 </svg>
