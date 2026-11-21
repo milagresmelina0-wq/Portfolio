@@ -147,7 +147,7 @@ button { font: inherit; }
 .header {
   position: fixed; inset: 0 0 auto 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  height: var(--header-h); padding: 24px;
+  height: var(--header-h); padding: 0 24px;
   border-bottom: .5px solid var(--white);
   color: var(--white);
   -webkit-backdrop-filter: blur(10.8px); backdrop-filter: blur(10.8px);
@@ -261,10 +261,14 @@ button { font: inherit; }
 
 /* ---------- Seções ---------- */
 .section {
-  display: flex; flex-direction: column; gap: 60px;
+  display: flex; flex-direction: column;
   width: 100%; max-width: 1440px; margin: 120px auto 0;
   padding-inline: var(--gutter);
 }
+/* Bloco que encolhe proporcionalmente quando a altura da janela é menor que o conteúdo
+   (o fator --k é calculado em js/main.js; sem JS fica 1). */
+.fit { display: flex; flex-direction: column; gap: 60px; width: 100%; }
+[data-fit] { zoom: var(--k, 1); }
 .section__body { display: flex; flex-direction: column; align-items: center; gap: 40px; }
 
 .section__header { display: flex; align-items: center; gap: 24px; }
@@ -280,7 +284,7 @@ button { font: inherit; }
 .intro__text { max-width: 714px; font-size: clamp(16px, 1.25vw, 18px); line-height: 1.7; }
 
 /* 1 · Quem sou */
-.about { display: grid; grid-template-columns: 414px minmax(0, 1fr); gap: 116px; }
+.about { display: grid; grid-template-columns: 414px minmax(0, 1fr); gap: clamp(32px, 8.06vw, 116px); }
 .about__side { display: flex; flex-direction: column; align-items: center; gap: 26px; width: 100%; max-width: 414px; }
 
 .profile { position: relative; width: 100%; max-width: 384px; aspect-ratio: 384 / 386; }
@@ -498,8 +502,42 @@ button { font: inherit; }
 .footer__brand img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
 .footer small { font-size: 16px; font-weight: 600; }
 
+/* ---------- Encaixe na tela (desktop) ----------
+   Em janelas largas, o hero + pills ocupam a altura toda da tela e cada seção
+   cabe numa tela. O conteúdo das seções encolhe proporcionalmente (js/main.js)
+   só quando a janela é mais baixa que ele; em telas altas nada muda. */
+@media (min-width: 1001px) and (min-height: 460px) {
+  :root { --header-h: clamp(64px, 10vh, 88.5px); --pad-y: clamp(12px, 3vh, 32px); }
+  html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+
+  .top {
+    height: 100svh; min-height: 520px; scroll-snap-align: start;
+    gap: clamp(14px, 2.6vh, 56px); padding-bottom: clamp(14px, 2.4vh, 24px);
+  }
+  .hero { flex: 1 1 auto; height: auto; min-height: 0; }
+  .marquee { flex: none; }
+  .hero__content { bottom: clamp(48px, 14vh, 120px); gap: clamp(28px, 6vh, 56px); }
+  .hero__title { font-size: clamp(30px, min(2.78vw, 5.2vh), 40px); }
+  .hero__subtitle { font-size: clamp(16px, min(1.53vw, 3vh), 22px); }
+  .hero__avatar { width: auto; height: min(489px, 82%); }
+
+  .section {
+    min-height: 100svh; margin-top: 0; justify-content: center; scroll-snap-align: start;
+    padding-block: calc(var(--header-h) + var(--pad-y)) var(--pad-y);
+  }
+  .fit { gap: clamp(28px, 5vh, 60px); }
+  .project { max-width: none; } /* a largura já é limitada pela seção (1192px em 1440); assim os cards acompanham a linha do título quando o bloco encolhe */
+
+  .contact {
+    min-height: 100svh; margin-top: 0; display: flex; flex-direction: column; scroll-snap-align: start;
+    padding-top: calc(var(--header-h) + var(--pad-y));
+  }
+  .contact__grid { margin-block: auto; }
+  .footer { margin-top: 0; }
+}
+
 /* ---------- Responsivo ---------- */
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
   .about { grid-template-columns: 1fr; gap: 56px; }
   .about__side { margin-inline: auto; }
   .about__main { align-items: flex-start; }
@@ -532,7 +570,8 @@ button { font: inherit; }
 }
 
 @media (max-width: 900px) {
-  .section { gap: 44px; margin-top: 88px; }
+  .section { margin-top: 88px; }
+  .fit { gap: 44px; }
   .project { flex-direction: column; }
   .project + .project { margin-top: 24px; filter: none; }
   .project__media { flex: none; min-height: 260px; border-radius: var(--radius) var(--radius) 0 0; }
@@ -547,7 +586,7 @@ button { font: inherit; }
 }
 
 @media (max-width: 640px) {
-  .header { padding: 16px; }
+  .header { padding: 0 16px; }
   .header__role, .header__dot { display: none; }
   .header__name { font-size: 16px; }
   .section__name, .section__tag { font-size: 15px; }
@@ -566,7 +605,7 @@ button { font: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation: none !important;
-    transition-duration: .01ms !important;
+    transition: none !important; /* (não usar duration mínima: faria o zoom do .fit transicionar e o cálculo de encaixe leria valores antigos) */
   }
   .btn:hover, .tool:hover, .service:hover, .feedback:hover, .pill:hover { transform: none; }
 }

@@ -83,11 +83,11 @@
     const prev = $(`[data-carousel-prev="${id}"]`);
     const next = $(`[data-carousel-next="${id}"]`);
 
+    /* Distância entre dois cards em px locais (offsetLeft ignora o zoom do bloco .fit) */
     const step = () => {
-      const card = track.firstElementChild;
-      if (!card) return 0;
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      return card.getBoundingClientRect().width + gap;
+      const [a, b] = track.children;
+      if (!a) return 0;
+      return b ? b.offsetLeft - a.offsetLeft : a.offsetWidth;
     };
     const go = (dir) => track.scrollBy({ left: dir * step(), behavior: motion.matches ? 'auto' : 'smooth' });
 
@@ -105,6 +105,7 @@
       if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
     });
     window.addEventListener('resize', sync);
+    window.addEventListener('portfolio:fit', sync);
     sync();
   });
 
@@ -122,4 +123,67 @@
     motion.addEventListener('change', apply);
     apply();
   });
+
+  /* Encaixe na tela: em desktop, cada seção cabe na altura da janela.
+     O bloco [data-fit] ganha um fator --k (zoom proporcional, mínimo K_MIN) quando
+     o conteúdo é mais alto que o espaço disponível. Em telas altas k = 1. */
+  const desktop = window.matchMedia('(min-width: 1001px) and (min-height: 460px)');
+  const K_MIN = 0.66;
+  const fitEls = $$('[data-fit]');
+
+  const fitAll = () => {
+    fitEls.forEach((el) => {
+      el.style.removeProperty('--k');
+      if (!desktop.matches) return;
+
+      const host = el.parentElement;
+      const cs = getComputedStyle(host);
+      const reserved = Array.from(host.children)
+        .filter((c) => c !== el && getComputedStyle(c).position !== 'absolute')
+        .reduce((sum, c) => sum + c.getBoundingClientRect().height, 0);
+      const avail = window.innerHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0) - reserved;
+
+      /* Altura visual cresce com k (o layout reflui quando k muda), então busco o
+         maior k em [K_MIN, 1] que ainda cabe, por bisseção. */
+      const visualAt = (k) => {
+        el.style.setProperty('--k', k.toFixed(4));
+        return el.getBoundingClientRect().height;
+      };
+
+      let k = 1;
+      if (visualAt(1) > avail) {
+        if (visualAt(K_MIN) >= avail) {
+          k = K_MIN;
+        } else {
+          let lo = K_MIN;
+          let hi = 1;
+          for (let i = 0; i < 9; i += 1) {
+            const mid = (lo + hi) / 2;
+            if (visualAt(mid) <= avail) lo = mid; else hi = mid;
+          }
+          k = lo;
+        }
+      }
+      if (k >= 0.999) el.style.removeProperty('--k');
+      else el.style.setProperty('--k', k.toFixed(4));
+    });
+    window.dispatchEvent(new Event('portfolio:fit'));
+  };
+
+  /* setTimeout (e não rAF): continua rodando mesmo se a aba/quadro estiver oculto */
+  let fitTimer = 0;
+  const queueFit = (delay = 60) => {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitAll, delay);
+  };
+
+  window.addEventListener('resize', () => queueFit());
+  desktop.addEventListener('change', () => queueFit(0));
+  window.addEventListener('load', () => {
+    queueFit(0);
+    setTimeout(fitAll, 600); /* depois que fontes e imagens assentam */
+    setTimeout(fitAll, 1800);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => queueFit(0));
+  fitAll();
 })();
