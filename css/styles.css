@@ -442,9 +442,10 @@ button { font: inherit; }
   background: var(--cream);
 }
 .contact__bg {
-  /* 130% de largura ancorado à direita: o marrom chega até perto do texto, como no protótipo */
-  position: absolute; top: 0; right: 0; width: 130%; height: 100%; max-width: none;
-  object-fit: cover; opacity: .82; pointer-events: none;
+  /* Mesma posição do Figma: a imagem (já girada 90°) fica ancorada embaixo à direita e mostra
+     os 73,6% da direita dela (transformação de recorte do fill: escala x 0,7358 => 135,9% da largura). */
+  position: absolute; right: 0; bottom: 0; width: 135.9%; height: auto; min-height: 100%; max-width: none;
+  object-fit: cover; object-position: right bottom; opacity: .82; pointer-events: none;
 }
 .contact__grid {
   position: relative;
@@ -493,14 +494,16 @@ button { font: inherit; }
 .contact__link:hover .contact__icon { transform: translateY(-2px) rotate(-4deg); background: #363636; }
 
 .footer {
-  position: relative; margin-top: 80px; padding: 24px 56px;
+  position: relative; margin-top: 80px; padding: 10px 56px; /* mais baixo que o header: informação secundária */
   display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
   border-top: .5px solid var(--white); color: var(--white);
   -webkit-backdrop-filter: blur(10.8px); backdrop-filter: blur(10.8px);
 }
-.footer__brand { display: flex; align-items: center; gap: 14px; }
-.footer__brand img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
-.footer small { font-size: 16px; font-weight: 600; }
+.footer__brand { display: flex; align-items: center; gap: 12px; }
+.footer__brand img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; }
+.footer small { font-size: 14px; font-weight: 600; }
+.footer .btn { padding: 6px 12px; font-size: 13px; }
+.footer .btn__icon { padding: 1px 7px; }
 
 /* ---------- Encaixe na tela (desktop) ----------
    Em janelas largas, o hero + pills ocupam a altura toda da tela e cada seção
@@ -533,7 +536,7 @@ button { font: inherit; }
     padding-top: calc(var(--header-h) + var(--pad-y));
   }
   .contact__grid { margin-block: auto; }
-  .footer { margin-top: 0; }
+  .footer { margin-top: clamp(20px, 5vh, 48px); } /* respiro entre o conteúdo e o rodapé */
 }
 
 /* ---------- Responsivo ---------- */

@@ -138,9 +138,13 @@
 
       const host = el.parentElement;
       const cs = getComputedStyle(host);
+      /* altura (e margens) dos irmãos que não escalam, como o rodapé da seção de contato */
       const reserved = Array.from(host.children)
         .filter((c) => c !== el && getComputedStyle(c).position !== 'absolute')
-        .reduce((sum, c) => sum + c.getBoundingClientRect().height, 0);
+        .reduce((sum, c) => {
+          const s = getComputedStyle(c);
+          return sum + c.getBoundingClientRect().height + (parseFloat(s.marginTop) || 0) + (parseFloat(s.marginBottom) || 0);
+        }, 0);
       const avail = window.innerHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0) - reserved;
 
       /* Altura visual cresce com k (o layout reflui quando k muda), então busco o
