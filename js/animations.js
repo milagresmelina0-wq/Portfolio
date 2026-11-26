@@ -133,6 +133,10 @@
     leanDeg: 2.2,                  /* inclinação máxima da cabeça, em graus */
     leanPivotY: 480,               /* altura do pescoço (a inclinação some daí para baixo, então os ombros não se mexem) */
     leanFadeEnd: 620,
+    /* "Virar o rosto": as feições (olhos, sobrancelhas, nariz, boca) deslocam um pouco mais que o contorno da cabeça,
+       como numa rotação. É uma deformação suave centrada no rosto (sem tocar no cabelo e nas orelhas). */
+    face: { x: 604, y: 322, rx: 118, ry: 112 },
+    faceShift: { x: 5.5, y: 3 },   /* deslocamento máximo das feições, em px da tela de 1200x896 */
     leanSplitX: 880,               /* à direita desta linha (a mão levantada) nada se mexe */
     /* Olhos (px da tela de 1200x896): bordas do delineado de cima e da linha de baixo, e centro/raio da íris */
     eyes: [
@@ -217,7 +221,7 @@
       const og = orig.getContext('2d', { willReadFrequently: true });
       og.drawImage(source, 0, 0);
       const work = document.createElement('canvas'); work.width = W; work.height = H;
-      const wg = work.getContext('2d');
+      const wg = work.getContext('2d', { willReadFrequently: true });
       wg.drawImage(orig, 0, 0);
 
       const out = make('canvas', 'hero__avatar-img avatar__canvas');
@@ -281,11 +285,44 @@
         });
       };
 
+      /* "Virar o rosto": deformação suave em torno do rosto. Cada ponto da região volta buscar sua cor um pouco
+         deslocada, com peso que cai de 1 no centro do rosto a ~0 nas bordas (então cabelo e orelhas não se mexem). */
+      const F = A.face;
+      const RX = Math.max(0, Math.floor(F.x - F.rx * 1.7)); const RY = Math.max(0, Math.floor(F.y - F.ry * 1.7));
+      const RW = Math.min(W - RX, Math.ceil(F.rx * 3.4)); const RH = Math.min(H - RY, Math.ceil(F.ry * 3.4));
+      const weight = new Float32Array(RW * RH);
+      for (let y = 0; y < RH; y++) for (let x = 0; x < RW; x++) {
+        const u = (x + RX - F.x) / F.rx; const v = (y + RY - F.y) / F.ry;
+        weight[y * RW + x] = Math.exp(-2 * (u * u + v * v));
+      }
+      const warped = document.createElement('canvas'); warped.width = W; warped.height = H;
+      const wg2 = warped.getContext('2d');
+      const warpOut = new ImageData(RW, RH);
+      const warpFace = (fx, fy) => {
+        if (Math.abs(fx) < 0.015 && Math.abs(fy) < 0.015) return work; /* parada: a imagem original, sem deformar nada */
+        const s = wg.getImageData(RX, RY, RW, RH).data; const d = warpOut.data;
+        const dx = fx * A.faceShift.x; const dy = fy * A.faceShift.y;
+        for (let y = 0; y < RH; y++) for (let x = 0; x < RW; x++) {
+          const g = weight[y * RW + x];
+          let sx = x - dx * g; let sy = y - dy * g;
+          sx = sx < 0 ? 0 : (sx > RW - 1.001 ? RW - 1.001 : sx); sy = sy < 0 ? 0 : (sy > RH - 1.001 ? RH - 1.001 : sy);
+          const x0 = sx | 0; const y0 = sy | 0; const ax = sx - x0; const ay = sy - y0;
+          const i00 = (y0 * RW + x0) * 4; const i10 = i00 + 4; const i01 = i00 + RW * 4; const i11 = i01 + 4;
+          const o = (y * RW + x) * 4;
+          for (let c = 0; c < 4; c++) d[o + c] = (s[i00 + c] * (1 - ax) + s[i10 + c] * ax) * (1 - ay) + (s[i01 + c] * (1 - ax) + s[i11 + c] * ax) * ay;
+        }
+        wg2.clearRect(0, 0, W, H);
+        wg2.drawImage(work, 0, 0);
+        wg2.putImageData(warpOut, RX, RY);
+        return warped;
+      };
+
       /* desenha no canvas visível: faixas horizontais deslocadas para a cabeça inclinar; do pescoço para baixo nada se move */
       const STRIP = 4;
-      const render = (leanDeg, ox, oy) => {
+      const render = (leanDeg, ox, oy, fx = 0, fy = 0) => {
         fit();
         drawEyes(ox, oy);
+        const frameSrc = warpFace(fx, fy);
         const sx = cw / W; const sy = ch / H;
         og2.clearRect(0, 0, cw, ch);
         og2.imageSmoothingEnabled = true;
@@ -297,11 +334,11 @@
           const yc = y0 + STRIP / 2;
           const dx = yc < fadeStart ? t * (fadeStart - yc) : 0; /* quanto mais alto, mais a cabeça se desloca */
           const srcY = d0 / sy; const srcH = (d1 - d0) / sy;
-          og2.drawImage(work, 0, srcY, A.leanSplitX, srcH, dx * sx, d0, A.leanSplitX * sx, d1 - d0);
-          og2.drawImage(work, A.leanSplitX, srcY, W - A.leanSplitX, srcH, A.leanSplitX * sx, d0, (W - A.leanSplitX) * sx, d1 - d0);
+          og2.drawImage(frameSrc, 0, srcY, A.leanSplitX, srcH, dx * sx, d0, A.leanSplitX * sx, d1 - d0);
+          og2.drawImage(frameSrc, A.leanSplitX, srcY, W - A.leanSplitX, srcH, A.leanSplitX * sx, d0, (W - A.leanSplitX) * sx, d1 - d0);
         }
         const dTop = Math.round(fadeEnd * sy);
-        og2.drawImage(work, 0, dTop / sy, W, H - dTop / sy, 0, dTop, cw, ch - dTop);
+        og2.drawImage(frameSrc, 0, dTop / sy, W, H - dTop / sy, 0, dTop, cw, ch - dTop);
       };
 
       /* alvo (-1..1) a partir do mouse; olhos acompanham rápido e a cabeça um pouco depois */
@@ -310,7 +347,7 @@
         raf = 0;
         ex += (tx - ex) * 0.22; ey += (ty - ey) * 0.22;
         lean += (tx - lean) * 0.08;
-        render(lean * A.leanDeg, ex * A.eyeShift.x, ey * A.eyeShift.y);
+        render(lean * A.leanDeg, ex * A.eyeShift.x, ey * A.eyeShift.y, lean, ey); /* o rosto vira com a cabeça (lento); sobe/desce com os olhos */
         if (Math.abs(tx - ex) > 0.004 || Math.abs(ty - ey) > 0.004 || Math.abs(tx - lean) > 0.004) raf = requestAnimationFrame(step);
       };
       const kick = () => { if (!raf && visible) raf = requestAnimationFrame(step); };
