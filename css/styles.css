@@ -299,23 +299,22 @@ button { font: inherit; }
 .profile__bar {
   position: absolute; inset: 71.74% 0 0 0;
   display: flex; align-items: flex-end; gap: 8px; padding: 20px;
-  border-radius: 0 0 50px 50px; isolation: isolate;
+  border-radius: 0 0 50px 50px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #424242);
 }
-/* Desfoque progressivo: duas camadas, cada uma com máscara em degradê, somam ~4px embaixo
-   e começam em 0 no topo, sem borda visível entre a parte nítida e a desfocada. */
-.profile__bar::before, .profile__bar::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+/* Desfoque progressivo SEM backdrop-filter (que varia entre navegadores/GPU e podia borrar o rosto):
+   uma cópia da foto (fundo + recorte) com filter: blur, restrita à faixa de baixo e revelada
+   por uma máscara em degradê. O resto da foto não é tocado, então continua nítido. */
+.profile__blur {
+  position: absolute; inset: 71.74% 0 0 0; overflow: hidden; pointer-events: none;
+  border-radius: 0 0 50px 50px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 85%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 85%);
 }
-.profile__bar::before {
-  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
-}
-.profile__bar::after {
-  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 30%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 30%, #000 100%);
+.profile__blur-inner {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 353.9%; /* = altura total da foto (a faixa tem 28,26% dela), para as cópias alinharem */
+  filter: blur(4px);
 }
 
 .tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 12px; width: 100%; }

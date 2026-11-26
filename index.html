@@ -123,6 +123,13 @@
           <div class="profile" data-anim="profile">
             <img class="profile__bg" src="assets/img/profile-bg.jpg" alt="" aria-hidden="true" width="824" height="824">
             <img class="profile__cutout" src="assets/img/profile-cutout.png" alt="Foto de Melina Cividanis sentada em um banco" width="540" height="843" data-anim="profile-photo">
+            <!-- cópia desfocada da foto, visível só na faixa de baixo (ver .profile__blur no CSS) -->
+            <div class="profile__blur" aria-hidden="true">
+              <div class="profile__blur-inner">
+                <img class="profile__bg" src="assets/img/profile-bg.jpg" alt="" width="824" height="824">
+                <img class="profile__cutout" src="assets/img/profile-cutout.png" alt="" width="540" height="843">
+              </div>
+            </div>
             <div class="profile__bar">
               <!-- TODO: apontar para o PDF do currículo -->
               <a class="btn btn--glass" href="#" data-placeholder="cv" data-cursor="hover">
