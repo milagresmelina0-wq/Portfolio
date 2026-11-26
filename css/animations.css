@@ -19,25 +19,33 @@
 }
 
 /* ---------- Cursor personalizado ---------- */
+/* A estrela da marca vira o cursor. Posição, inclinação, escala e giro são calculados em
+   js/animations.js (um único transform por quadro); aqui ficam só o visual e as cores. */
 .cursor {
   position: fixed; left: 0; top: 0; z-index: 9999;
   display: none; pointer-events: none;
-  width: 20px; height: 20px; margin: -10px 0 0 -10px;
-  border-radius: 50%; background: var(--black);
-  mix-blend-mode: difference;
-  transform: translate3d(var(--cx, -100px), var(--cy, -100px), 0) scale(var(--cs, 1));
-  transition: transform .15s var(--anim-ease), width .25s var(--anim-ease), height .25s var(--anim-ease);
+  width: 34px; height: 44px; margin: -20px 0 0 -17px; /* o centro da estrela (50,60 de 100x130) é o ponto do mouse */
+  opacity: 0; transition: opacity .2s var(--anim-ease);
   will-change: transform;
 }
+.cursor.is-visible { opacity: 1; }
+.cursor.is-text { opacity: 0; } /* sobre campos de texto aparece o cursor nativo */
+
+.cursor__star { display: block; width: 100%; height: 100%; overflow: visible; animation: cursor-twinkle 2.8s ease-in-out infinite; }
+.cursor__star path {
+  fill: var(--black);
+  stroke: var(--white); stroke-width: 5; stroke-linejoin: round; paint-order: stroke; /* contorno: aparece sobre fundo escuro */
+  transition: fill .2s var(--anim-ease);
+}
+.cursor.is-hover .cursor__star path { fill: var(--brown); }
+@keyframes cursor-twinkle { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.06); } }
 
 /* Só ativa em dispositivos com mouse e quando o JS pedir */
 @media (hover: hover) and (pointer: fine) {
-  body.has-custom-cursor { cursor: none; }
-  body.has-custom-cursor a,
-  body.has-custom-cursor button,
-  body.has-custom-cursor [data-cursor] { cursor: none; }
+  body.has-custom-cursor,
+  body.has-custom-cursor :is(a, button, [role="button"], summary, label, [data-cursor]) { cursor: none; }
+  body.has-custom-cursor :is(input, textarea, select) { cursor: auto; }
   body.has-custom-cursor .cursor { display: block; }
-  body.has-custom-cursor .cursor.is-hover { --cs: 2.4; }
 }
 
 /* ---------- Avatar animado ---------- */
