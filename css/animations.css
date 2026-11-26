@@ -19,35 +19,47 @@
 }
 
 /* ---------- Cursor personalizado ---------- */
-/* A estrela da marca vira o cursor. Posição, inclinação, escala e giro são calculados em
-   js/animations.js (um único transform por quadro); aqui ficam só o visual e as cores. */
-.cursor {
-  position: fixed; left: 0; top: 0; z-index: 9999;
-  display: none; pointer-events: none;
-  width: 34px; height: 44px; margin: -20px 0 0 -17px; /* o centro da estrela (50,60 de 100x130) é o ponto do mouse */
-  opacity: 0; transition: opacity .2s var(--anim-ease);
-  will-change: transform;
+/* Bolinha azul pastel com brilho, que segue o mouse sem atraso. Cresce em links/botões/campos,
+   encolhe ao clicar, vira um balão com texto sobre elementos [data-cursor-label] e deixa um rastro
+   de brilhinhos. O movimento é feito em js/animations.js; aqui ficam o visual e as cores. */
+:root {
+  --cursor-dot: #a5d3ec;       /* azul claro pastel */
+  --cursor-glow: 112, 172, 208; /* mesmo azul, um pouco mais fechado, em rgb para o brilho */
+  --cursor-spark: #94c9e6;
 }
-.cursor.is-visible { opacity: 1; }
-.cursor.is-text { opacity: 0; } /* sobre campos de texto aparece o cursor nativo */
 
-.cursor__star { display: block; width: 100%; height: 100%; overflow: visible; animation: cursor-twinkle 2.8s ease-in-out infinite; }
-.cursor__star path {
-  fill: var(--black);
-  stroke: var(--white); stroke-width: 5; stroke-linejoin: round; paint-order: stroke; /* contorno: aparece sobre fundo escuro */
-  transition: fill .2s var(--anim-ease);
+.cursor, .cursor-spark { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 99999; }
+.cursor { display: none; width: 14px; height: 14px; opacity: 0; will-change: transform; }
+.cursor__dot {
+  display: flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 999px; overflow: hidden; white-space: nowrap;
+  background: var(--cursor-dot);
+  box-shadow: 0 0 10px 3px rgba(var(--cursor-glow), .75), 0 0 26px 10px rgba(var(--cursor-glow), .38);
+  transition: width .38s var(--anim-ease), height .38s var(--anim-ease), transform .38s var(--anim-ease);
 }
-.cursor.is-hover .cursor__star path { fill: var(--brown); }
-@keyframes cursor-twinkle { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.06); } }
+.cursor__label {
+  flex: none; max-width: 260px; overflow: hidden; text-overflow: ellipsis;
+  font: 500 13px/1 var(--font-body); letter-spacing: -.01em; color: var(--black);
+  opacity: 0; transition: opacity .2s;
+}
+.cursor.is-hot .cursor__dot { transform: scale(2.2); }
+.cursor.is-down .cursor__dot { transform: scale(.8); }
+/* balão: a bolinha cresce para o lado e vira uma pílula com o texto */
+.cursor.has-tip .cursor__dot,
+.cursor.has-tip.is-hot .cursor__dot { height: 32px; transform: translate(14px, 10px); }
+.cursor.has-tip.is-flip .cursor__dot,
+.cursor.has-tip.is-flip.is-hot .cursor__dot { transform: translate(-100%, 10px); }
+.cursor.has-tip.is-down .cursor__dot { transform: translate(14px, 10px) scale(.94); }
+.cursor.has-tip .cursor__label { opacity: 1; transition-delay: .12s; }
 
-/* Só ativa em dispositivos com mouse e quando o JS pedir */
+/* brilhinho (estrela de 4 pontas) do rastro e da explosão do clique */
+.cursor-spark { background: var(--cursor-spark); clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); }
+
+/* Só ativa em dispositivos com mouse e quando o JS pedir: esconde o cursor nativo em tudo */
 @media (hover: hover) and (pointer: fine) {
-  body.has-custom-cursor,
-  body.has-custom-cursor :is(a, button, [role="button"], summary, label, [data-cursor]) { cursor: none; }
-  body.has-custom-cursor :is(input, textarea, select) { cursor: auto; }
+  body.has-custom-cursor, body.has-custom-cursor * { cursor: none !important; }
   body.has-custom-cursor .cursor { display: block; }
 }
-
 /* ---------- Avatar animado ---------- */
 /* Para trocar a imagem por GIF/Lottie/sprite: substituir o conteúdo de
    [data-anim="hero-avatar"] mantendo o mesmo contêiner (484x489 no desktop). */
