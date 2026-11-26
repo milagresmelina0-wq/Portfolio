@@ -124,6 +124,152 @@
     apply();
   });
 
+  /* Select personalizado: o menu aberto de um <select> é desenhado pelo navegador e não aceita estilo.
+     Aqui ele é trocado por um combobox com o mesmo visual dos campos. O <select> original continua
+     no HTML (escondido) e guarda o valor, então o formulário e a leitura por leitores de tela seguem iguais. */
+  $$('select.field__control--select').forEach((select, index) => {
+    const uid = `select-${index}`;
+    const label = select.closest('.field') ? select.closest('.field').querySelector('label') : null;
+    const first = select.options[0];
+    const placeholder = first && first.value === '' ? first.textContent : '';
+    const items = Array.from(select.options).filter((o) => o.value !== '');
+
+    const wrap = document.createElement('div');
+    wrap.className = 'select';
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = `${uid}-button`;
+    button.className = 'field__control select__button';
+    button.setAttribute('role', 'combobox');
+    button.setAttribute('aria-haspopup', 'listbox');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', `${uid}-list`);
+    if (label) {
+      if (!label.id) label.id = `${uid}-label`;
+      button.setAttribute('aria-labelledby', `${label.id} ${button.id}`);
+      label.setAttribute('for', button.id); /* clicar no rótulo foca o botão (o select original fica escondido) */
+    }
+
+    const valueEl = document.createElement('span');
+    valueEl.className = 'select__value';
+    button.appendChild(valueEl);
+
+    const list = document.createElement('ul');
+    list.className = 'select__list';
+    list.id = `${uid}-list`;
+    list.setAttribute('role', 'listbox');
+    if (label) list.setAttribute('aria-labelledby', label.id);
+
+    const lis = items.map((opt, i) => {
+      const li = document.createElement('li');
+      li.id = `${uid}-option-${i}`;
+      li.className = 'select__option';
+      li.setAttribute('role', 'option');
+      li.textContent = opt.textContent;
+      list.appendChild(li);
+      return li;
+    });
+
+    select.classList.add('select__native');
+    select.tabIndex = -1;
+    select.setAttribute('aria-hidden', 'true');
+    select.parentNode.insertBefore(wrap, select);
+    wrap.append(button, list, select);
+
+    let active = -1;
+    let buffer = '';
+    let bufferTimer = 0;
+    const isOpen = () => wrap.classList.contains('is-open');
+    const selectedIndex = () => items.findIndex((o) => o.value === select.value);
+
+    const render = () => {
+      const sel = selectedIndex();
+      valueEl.textContent = sel >= 0 ? items[sel].textContent : placeholder;
+      valueEl.classList.toggle('is-placeholder', sel < 0);
+      lis.forEach((li, i) => li.setAttribute('aria-selected', String(i === sel)));
+    };
+
+    const setActive = (i) => {
+      active = Math.max(0, Math.min(lis.length - 1, i));
+      lis.forEach((li, n) => li.classList.toggle('is-active', n === active));
+      button.setAttribute('aria-activedescendant', lis[active].id);
+      lis[active].scrollIntoView({ block: 'nearest' });
+    };
+
+    const close = () => {
+      if (!isOpen()) return;
+      wrap.classList.remove('is-open');
+      button.setAttribute('aria-expanded', 'false');
+      button.removeAttribute('aria-activedescendant');
+    };
+
+    const open = () => {
+      if (isOpen()) return;
+      wrap.classList.remove('is-up');
+      wrap.classList.add('is-open');
+      button.setAttribute('aria-expanded', 'true');
+      setActive(Math.max(0, selectedIndex()));
+      /* sem espaço embaixo (e com mais espaço em cima): abre para cima */
+      const b = button.getBoundingClientRect();
+      const l = list.getBoundingClientRect();
+      if (l.bottom > window.innerHeight - 8 && b.top > window.innerHeight - b.bottom) wrap.classList.add('is-up');
+    };
+
+    const choose = (i) => {
+      select.value = items[i].value;
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      render();
+      close();
+    };
+
+    button.addEventListener('click', () => (isOpen() ? close() : open()));
+
+    button.addEventListener('keydown', (e) => {
+      const { key } = e;
+      if (key === 'ArrowDown' || key === 'ArrowUp') {
+        e.preventDefault();
+        if (!isOpen()) { open(); return; }
+        setActive(active + (key === 'ArrowDown' ? 1 : -1));
+      } else if (key === 'Home' || key === 'End') {
+        if (!isOpen()) return;
+        e.preventDefault();
+        setActive(key === 'Home' ? 0 : lis.length - 1);
+      } else if (key === 'Enter' || key === ' ') {
+        e.preventDefault();
+        if (isOpen()) choose(active); else open();
+      } else if (key === 'Escape') {
+        if (isOpen()) { e.preventDefault(); e.stopPropagation(); close(); }
+      } else if (key === 'Tab') {
+        close();
+      } else if (key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        /* digitar letras salta para a opção que começa com elas */
+        buffer += key.toLowerCase();
+        clearTimeout(bufferTimer);
+        bufferTimer = setTimeout(() => { buffer = ''; }, 600);
+        const hit = items.findIndex((o) => o.textContent.trim().toLowerCase().startsWith(buffer));
+        if (hit >= 0) { if (!isOpen()) open(); setActive(hit); }
+      }
+    });
+
+    /* mousedown com preventDefault mantém o foco no botão ao clicar numa opção */
+    list.addEventListener('mousedown', (e) => e.preventDefault());
+    list.addEventListener('click', (e) => {
+      const li = e.target.closest('.select__option');
+      if (li) choose(lis.indexOf(li));
+    });
+    list.addEventListener('pointermove', (e) => {
+      const li = e.target.closest('.select__option');
+      if (li) setActive(lis.indexOf(li));
+    });
+
+    document.addEventListener('pointerdown', (e) => { if (!wrap.contains(e.target)) close(); });
+    wrap.addEventListener('focusout', (e) => { if (!wrap.contains(e.relatedTarget)) close(); });
+
+    render();
+  });
+
   /* Encaixe na tela: em desktop, cada seção cabe na altura da janela.
      O bloco [data-fit] ganha um fator --k (zoom proporcional, mínimo K_MIN) quando
      o conteúdo é mais alto que o espaço disponível. Em telas altas k = 1. */

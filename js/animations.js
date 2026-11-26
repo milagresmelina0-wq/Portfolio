@@ -7,8 +7,7 @@
      PortfolioAnimations.register('hero-avatar', (el) => { ...animação da personagem... });
 
    Âncoras disponíveis: veja o cabeçalho de css/animations.css.
-   Cursor: links, botões e campos o fazem crescer; qualquer elemento com
-   data-cursor-label="Texto" mostra um balão com esse texto sob o cursor.
+   Cursor: links, botões, campos e opções de menu o fazem crescer.
    ========================================================================== */
 (() => {
   'use strict';
@@ -33,48 +32,27 @@
   window.addEventListener('load', () => api.init());
 
   /* ------------------------------------------------------------------------
-     Cursor: bolinha azul pastel com brilho, balão com texto e rastro de brilhinhos
+     Cursor: bolinha azul pastel com brilho e rastro de brilhinhos
      ------------------------------------------------------------------------ */
-  const HOT = 'a[href], button, [role="button"], input, textarea, select, summary, label[for], [data-cursor="hover"]';
+  const HOT = 'a[href], button, [role="button"], [role="option"], input, textarea, select, summary, label[for], [data-cursor="hover"]';
   const TRAIL_STEP = 26;   /* px de movimento entre um brilhinho do rastro e o próximo */
   const MAX_SPARKS = 46;   /* limite de brilhinhos vivos ao mesmo tempo */
 
   api.register('cursor', (el) => {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-    el.innerHTML = '<i class="cursor__dot"><b class="cursor__label"></b></i>';
-    const dot = el.firstElementChild;
-    const label = dot.firstElementChild;
+    el.innerHTML = '<i class="cursor__dot"></i>';
     document.body.classList.add('has-custom-cursor');
 
     let x = -100; let y = -100;
     let lastX = x; let lastY = y;
     let shown = false;
-    let tipText = '';
     let sparks = 0;
     let lastScrollCheck = 0;
 
     const isHot = (target) => {
       const hit = target && target.closest ? target.closest(HOT) : null;
       return !!hit && hit.getAttribute('aria-disabled') !== 'true' && !hit.disabled;
-    };
-
-    const tipFor = (target) => {
-      const host = target && target.closest ? target.closest('[data-cursor-label]') : null;
-      return host ? host.dataset.cursorLabel : '';
-    };
-
-    const setTip = (text) => {
-      if (text === tipText) return;
-      tipText = text;
-      if (text) {
-        label.textContent = text;
-        dot.style.width = `${label.offsetWidth + 30}px`; /* o rótulo não encolhe: mede o texto e abre a pílula */
-        el.classList.add('has-tip');
-      } else {
-        dot.style.width = '';
-        el.classList.remove('has-tip', 'is-flip');
-      }
     };
 
     /* Brilhinho: nasce pequeno, cresce, gira e some caindo um pouco */
@@ -103,11 +81,6 @@
 
     const updateFrom = (target) => {
       el.classList.toggle('is-hot', isHot(target));
-      setTip(tipFor(target));
-      if (tipText) {
-        const w = parseFloat(dot.style.width) || 0;
-        el.classList.toggle('is-flip', x + 14 + w > window.innerWidth - 8); /* perto da borda direita: o balão abre para a esquerda */
-      }
     };
 
     document.addEventListener('pointermove', (e) => {
@@ -139,6 +112,6 @@
       updateFrom(document.elementFromPoint(x, y));
     }, { passive: true });
 
-    document.documentElement.addEventListener('mouseleave', () => { el.style.opacity = '0'; setTip(''); shown = false; });
+    document.documentElement.addEventListener('mouseleave', () => { el.style.opacity = '0'; shown = false; });
   });
 })();

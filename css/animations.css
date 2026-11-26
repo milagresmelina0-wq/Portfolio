@@ -20,7 +20,7 @@
 
 /* ---------- Cursor personalizado ---------- */
 /* Bolinha azul pastel com brilho, que segue o mouse sem atraso. Cresce em links/botões/campos,
-   encolhe ao clicar, vira um balão com texto sobre elementos [data-cursor-label] e deixa um rastro
+   encolhe ao clicar e deixa um rastro
    de brilhinhos. O movimento é feito em js/animations.js; aqui ficam o visual e as cores. */
 :root {
   --cursor-dot: #a5d3ec;       /* azul claro pastel */
@@ -37,21 +37,8 @@
   box-shadow: 0 0 10px 3px rgba(var(--cursor-glow), .75), 0 0 26px 10px rgba(var(--cursor-glow), .38);
   transition: width .38s var(--anim-ease), height .38s var(--anim-ease), transform .38s var(--anim-ease);
 }
-.cursor__label {
-  flex: none; max-width: 260px; overflow: hidden; text-overflow: ellipsis;
-  font: 500 13px/1 var(--font-body); letter-spacing: -.01em; color: var(--black);
-  opacity: 0; transition: opacity .2s;
-}
 .cursor.is-hot .cursor__dot { transform: scale(2.2); }
 .cursor.is-down .cursor__dot { transform: scale(.8); }
-/* balão: a bolinha cresce para o lado e vira uma pílula com o texto */
-.cursor.has-tip .cursor__dot,
-.cursor.has-tip.is-hot .cursor__dot { height: 32px; transform: translate(14px, 10px); }
-.cursor.has-tip.is-flip .cursor__dot,
-.cursor.has-tip.is-flip.is-hot .cursor__dot { transform: translate(-100%, 10px); }
-.cursor.has-tip.is-down .cursor__dot { transform: translate(14px, 10px) scale(.94); }
-.cursor.has-tip .cursor__label { opacity: 1; transition-delay: .12s; }
-
 /* brilhinho (estrela de 4 pontas) do rastro e da explosão do clique */
 .cursor-spark { background: var(--cursor-spark); clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); }
 
