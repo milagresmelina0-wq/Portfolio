@@ -50,25 +50,18 @@
 
 /* ---------- Personagem do hero ---------- */
 /* Camadas (montadas por js/animations.js):
-     .avatar__stage  acompanha o mouse (inclinação em 3D leve; já vem com escala 1.04 para as bordas
-                     não aparecerem quando inclina, e 6px mais baixa para o recorte do hero esconder
-                     qualquer folga de baixo)
-     .avatar__pop    reação ao clique (pulinho)
-     .avatar__poses  respiração + as imagens das poses empilhadas (só a ativa aparece)
-   Tudo só usa transform/opacity, que o navegador anima na GPU sem recalcular layout. */
-.hero__avatar { -webkit-tap-highlight-color: transparent; }
+     .avatar__base   a imagem original (a <picture> do HTML; com mouse, o <canvas> que a redesenha com a
+                     íris deslocada e a cabeça inclinada). É a única que aparece em repouso.
+     .avatar__swap   as imagens da troca, por cima. Entram suave ao clicar e saem depois de 3 segundos.
+   A troca é um cruzamento de opacidade escalonado: a que entra sobe primeiro e a que sai desce um instante
+   depois, para o corpo não ficar "transparente" no meio da transição. */
+.hero__avatar { -webkit-tap-highlight-color: transparent; cursor: default; }
 .hero__avatar:focus-visible { outline: 2px solid var(--white); outline-offset: -6px; border-radius: 24px; }
-.avatar__stage { position: absolute; inset: 6px 0 -6px; transform: scale(1.04); transform-origin: 50% 100%; will-change: transform; }
-.avatar__pop, .avatar__poses { position: absolute; inset: 0; transform-origin: 50% 100%; }
-.avatar__poses { animation: avatar-breathe 4.4s ease-in-out infinite alternate; }
-.hero__avatar.is-paused .avatar__poses { animation-play-state: paused; }
-@keyframes avatar-breathe { from { transform: scale(1, 1); } to { transform: scale(1.004, 1.014); } }
-
-.avatar__pose { opacity: 0; transition: opacity .22s var(--anim-ease); }
-.avatar__pose.is-active { opacity: 1; }
-/* remendo dos olhos fechados, posicionado em % sobre o mesmo recorte das imagens */
-.avatar__blink { position: absolute; max-width: none; opacity: 0; pointer-events: none; }
-
+.avatar__base { position: absolute; inset: 0; transition: opacity .45s ease-out; }
+.hero__avatar.is-swapped .avatar__base { opacity: 0; transition: opacity .35s linear .25s; }
+.hero__avatar.has-canvas .avatar__base picture { visibility: hidden; } /* o canvas desenha a mesma imagem no mesmo lugar */
+.avatar__swap { opacity: 0; pointer-events: none; transition: opacity .35s linear .25s; }
+.avatar__swap.is-active { opacity: 1; transition: opacity .45s ease-out; }
 /* ---------- Revelar ao rolar (desligado por padrão) ---------- */
 .anim-ready [data-reveal] {
   opacity: 0; transform: translateY(24px);
@@ -79,5 +72,4 @@
 @media (prefers-reduced-motion: reduce) {
   .anim-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
   .cursor { display: none !important; }
-  .avatar__poses { animation: none; }
 }
